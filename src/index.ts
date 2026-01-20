@@ -11,10 +11,11 @@ const app = new Elysia()
       origin: [
         'http://localhost:5173', // Vite / React / Vue Localhost
         'http://localhost:3000', // ตัว Backend เอง (สำหรับการทดสอบ)
-        // 'https://myapp.com'   // Domain จริงตอน Deploy
+        'https://bun-vite-mu.vercel.app', // Domain จริงตอน Deploy
       ],
       // 🔑 อนุญาตให้รับ-ส่ง Cookie/Session
       credentials: true, 
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // (เผื่อไว้) ระบุ method ที่ยอมรับ
       // อนุญาต Header ที่จำเป็น
       allowedHeaders: ['Content-Type', 'Authorization'] 
     })
