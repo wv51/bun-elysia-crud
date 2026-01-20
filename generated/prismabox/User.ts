@@ -4,48 +4,44 @@ import { __transformDate__ } from "./__transformDate__";
 
 import { __nullable__ } from "./__nullable__";
 
-export const ProductPlain = t.Object(
+export const UserPlain = t.Object(
   {
     id: t.String(),
     name: t.String(),
-    detail: t.String(),
-    price: __nullable__(t.Number()),
+    email: t.String(),
+    password: t.String(),
     createdAt: t.Date(),
     updatedAt: t.Date(),
   },
   { additionalProperties: false },
 );
 
-export const ProductRelations = t.Object({}, { additionalProperties: false });
+export const UserRelations = t.Object({}, { additionalProperties: false });
 
-export const ProductPlainInputCreate = t.Object(
-  {
-    name: t.String(),
-    detail: t.String(),
-    price: t.Optional(__nullable__(t.Number())),
-  },
+export const UserPlainInputCreate = t.Object(
+  { name: t.String(), email: t.String(), password: t.String() },
   { additionalProperties: false },
 );
 
-export const ProductPlainInputUpdate = t.Object(
+export const UserPlainInputUpdate = t.Object(
   {
     name: t.Optional(t.String()),
-    detail: t.Optional(t.String()),
-    price: t.Optional(__nullable__(t.Number())),
+    email: t.Optional(t.String()),
+    password: t.Optional(t.String()),
   },
   { additionalProperties: false },
 );
 
-export const ProductRelationsInputCreate = t.Object(
+export const UserRelationsInputCreate = t.Object(
   {},
   { additionalProperties: false },
 );
 
-export const ProductRelationsInputUpdate = t.Partial(
+export const UserRelationsInputUpdate = t.Partial(
   t.Object({}, { additionalProperties: false }),
 );
 
-export const ProductWhere = t.Partial(
+export const UserWhere = t.Partial(
   t.Recursive(
     (Self) =>
       t.Object(
@@ -55,30 +51,30 @@ export const ProductWhere = t.Partial(
           OR: t.Array(Self, { additionalProperties: false }),
           id: t.String(),
           name: t.String(),
-          detail: t.String(),
-          price: t.Number(),
+          email: t.String(),
+          password: t.String(),
           createdAt: t.Date(),
           updatedAt: t.Date(),
         },
         { additionalProperties: false },
       ),
-    { $id: "Product" },
+    { $id: "User" },
   ),
 );
 
-export const ProductWhereUnique = t.Recursive(
+export const UserWhereUnique = t.Recursive(
   (Self) =>
     t.Intersect(
       [
         t.Partial(
           t.Object(
-            { id: t.String(), name: t.String() },
+            { id: t.String(), email: t.String() },
             { additionalProperties: false },
           ),
           { additionalProperties: false },
         ),
         t.Union(
-          [t.Object({ id: t.String() }), t.Object({ name: t.String() })],
+          [t.Object({ id: t.String() }), t.Object({ email: t.String() })],
           { additionalProperties: false },
         ),
         t.Partial(
@@ -100,8 +96,8 @@ export const ProductWhereUnique = t.Recursive(
             {
               id: t.String(),
               name: t.String(),
-              detail: t.String(),
-              price: t.Number(),
+              email: t.String(),
+              password: t.String(),
               createdAt: t.Date(),
               updatedAt: t.Date(),
             },
@@ -111,16 +107,16 @@ export const ProductWhereUnique = t.Recursive(
       ],
       { additionalProperties: false },
     ),
-  { $id: "Product" },
+  { $id: "User" },
 );
 
-export const ProductSelect = t.Partial(
+export const UserSelect = t.Partial(
   t.Object(
     {
       id: t.Boolean(),
       name: t.Boolean(),
-      detail: t.Boolean(),
-      price: t.Boolean(),
+      email: t.Boolean(),
+      password: t.Boolean(),
       createdAt: t.Boolean(),
       updatedAt: t.Boolean(),
       _count: t.Boolean(),
@@ -129,11 +125,11 @@ export const ProductSelect = t.Partial(
   ),
 );
 
-export const ProductInclude = t.Partial(
+export const UserInclude = t.Partial(
   t.Object({ _count: t.Boolean() }, { additionalProperties: false }),
 );
 
-export const ProductOrderBy = t.Partial(
+export const UserOrderBy = t.Partial(
   t.Object(
     {
       id: t.Union([t.Literal("asc"), t.Literal("desc")], {
@@ -142,10 +138,10 @@ export const ProductOrderBy = t.Partial(
       name: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
-      detail: t.Union([t.Literal("asc"), t.Literal("desc")], {
+      email: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
-      price: t.Union([t.Literal("asc"), t.Literal("desc")], {
+      password: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
       createdAt: t.Union([t.Literal("asc"), t.Literal("desc")], {
@@ -159,16 +155,16 @@ export const ProductOrderBy = t.Partial(
   ),
 );
 
-export const Product = t.Composite([ProductPlain, ProductRelations], {
+export const User = t.Composite([UserPlain, UserRelations], {
   additionalProperties: false,
 });
 
-export const ProductInputCreate = t.Composite(
-  [ProductPlainInputCreate, ProductRelationsInputCreate],
+export const UserInputCreate = t.Composite(
+  [UserPlainInputCreate, UserRelationsInputCreate],
   { additionalProperties: false },
 );
 
-export const ProductInputUpdate = t.Composite(
-  [ProductPlainInputUpdate, ProductRelationsInputUpdate],
+export const UserInputUpdate = t.Composite(
+  [UserPlainInputUpdate, UserRelationsInputUpdate],
   { additionalProperties: false },
 );

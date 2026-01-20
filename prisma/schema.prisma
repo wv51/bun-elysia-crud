@@ -16,9 +16,22 @@ datasource db {
   // ไม่ต้องใส่ url ตรงนี้ใน Prisma 7 (เราจะไป config ในไฟล์แยก)
 }
 
+// 🔐 User - สำหรับ Authentication
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 🛍️ Product - สำหรับสินค้า
 model Product {
-  id     String   @id @default(cuid())
-  name   String   @unique
-  detail String
-  price  Decimal?
+  id        String   @id @default(cuid())
+  name      String   @unique
+  detail    String
+  price     Decimal?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
