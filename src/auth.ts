@@ -88,16 +88,26 @@ export const authRoutes = new Elysia({
       // สร้าง JWT Token
       const token = await jwt.sign({ sub: user.id });
 
-      // เช็คว่าเป็น Production ไหม (เพื่อตั้งค่า Cookie ให้ถูก)
-      const isProduction = process.env.NODE_ENV === "production";
+      // 👇 แก้ไขตรงนี้ครับ: เช็ค NODE_ENV หรือ VERCEL (เพราะ Vercel จะมี env นี้ให้เสมอ)
+      const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
 
-      // ✅ 1. ส่ง Token ผ่าน Cookie (สำหรับ Web Frontend)
+      // ✅ 1. ส่ง Token ผ่าน Cookie
       session.value = token;
       session.path = "/";
       session.httpOnly = true;
       session.maxAge = 60 * 60 * 24 * 7; // 7 วัน
-      session.secure = isProduction ? true : false;
-      session.sameSite = isProduction ? "none" : "lax";
+
+      // 🚨 จุดตัดสินใจ:
+      // ถ้าอยากให้ชัวร์บน Vercel ให้บังคับเป็น true/'none' ไปเลย
+      // แต่ถ้าอยากให้ Test Localhost ได้ด้วย ให้ใช้ Logic นี้ครับ:
+
+      if (isProduction) {
+        session.secure = true;       // ต้อง true บน https
+        session.sameSite = "none";   // ต้อง none เพื่อข้ามโดเมน
+      } else {
+        session.secure = false;      // false บน http localhost
+        session.sameSite = "lax";    // lax บน localhost
+      }
 
       // ✅ 2. Return Token ใน Response (สำหรับ Mobile/API)
       return {
